@@ -24,7 +24,7 @@ fn main() -> Result<(), std::io::Error> {
 
     println!(
         "Some elf has the most calories: {:?}",
-        elves.last().unwrap()
+        elves.last().unwrap_or(&0)
     );
 
     Ok(())
