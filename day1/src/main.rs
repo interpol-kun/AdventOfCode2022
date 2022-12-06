@@ -1,9 +1,24 @@
 use std::{
+    env,
     fs::File,
     io::{BufRead, BufReader},
 };
 
-fn main() -> Result<(), std::io::Error> {
+fn main() {
+    let case = env::args()
+        .collect::<Vec<String>>()
+        .get(1)
+        .unwrap_or(&"0".to_string())
+        .parse::<usize>()
+        .unwrap_or_default();
+
+    println!(
+        "Some elf has the most calories: {:?}",
+        calculate(case).unwrap_or_default()
+    );
+}
+
+fn calculate(case: usize) -> Result<i32, std::io::Error> {
     let lines = BufReader::new(File::open("src/input")?).lines();
 
     let mut elves: Vec<i32> = vec![0];
@@ -22,10 +37,8 @@ fn main() -> Result<(), std::io::Error> {
 
     elves.sort();
 
-    println!(
-        "Some elf has the most calories: {:?}",
-        elves.last().unwrap_or(&0)
-    );
-
-    Ok(())
+    match case {
+        1 => Result::Ok(elves[elves.len() - 3..elves.len()].iter().sum::<i32>()),
+        _ => Result::Ok(elves.pop().unwrap_or_default()),
+    }
 }
