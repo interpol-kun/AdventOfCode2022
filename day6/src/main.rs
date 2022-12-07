@@ -14,17 +14,17 @@ fn solve() -> Result<i32, std::io::Error> {
     let line = line.next().unwrap()?;
 
     let mut sequence = Vec::new();
-    let load_size = 14;
+    let needle_size = 14;
 
     for c in line.chars().enumerate() {
         sequence.push(c.1);
 
         let is_unique = unique(&mut sequence);
 
-        if sequence.len() == load_size && is_unique {
+        if sequence.len() == needle_size && is_unique {
             println!("Found {:?}", sequence);
             return Ok(c.0 as i32 + 1);
-        } else if sequence.len() == load_size {
+        } else if sequence.len() == needle_size {
             _ = sequence.remove(0);
         }
     }
